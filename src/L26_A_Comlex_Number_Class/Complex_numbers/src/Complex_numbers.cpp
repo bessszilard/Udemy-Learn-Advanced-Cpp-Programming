@@ -1,0 +1,21 @@
+//============================================================================
+// Name        : Complex_numbers.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+#include "Complex.h"
+using namespace std;
+using namespace caveofprogramming;
+
+int main() {
+	Complex c1(1, 2);
+	Complex c2 = c1;
+
+	c2 = c1;
+
+	return 0;
+}
