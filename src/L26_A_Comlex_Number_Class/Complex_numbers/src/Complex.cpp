@@ -25,8 +25,8 @@ const Complex &Complex::operator=(const Complex &other) {
 	return *this;
 }
 
-ostream &operator<<(ostream &out, const Complex &c);
-	out << c.getReal() << "+ " << c.getImag() << "i " << endl;
+ostream &operator<<(ostream &out, const Complex &c) {
+	out << "(" << c.getReal() << " + " << c.getImag() << "i) ";
 	return out;
 }
 

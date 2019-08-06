@@ -13,9 +13,10 @@ using namespace caveofprogramming;
 
 int main() {
 	Complex c1(1, 2);
-	Complex c2 = c1;
+	Complex c2(c1);
+	Complex c3 = c2;
 
 	c2 = c1;
-
+	cout << c2 << "\t" << c3 << endl;
 	return 0;
 }
