@@ -25,6 +25,14 @@ const Complex &Complex::operator=(const Complex &other) {
 	return *this;
 }
 
+bool Complex::operator==(const Complex &other) {
+	return (real == other.getReal()) && (imaginary == other.getImag());
+}
+
+bool Complex::operator!=(const Complex &other) {
+	return !(*this == other);
+}
+
 ostream &operator<<(ostream &out, const Complex &c) {
 	out << "(" << c.getReal() << " + " << c.getImag() << "i) ";
 	return out;

@@ -23,7 +23,8 @@ public:
 	Complex(double real, double imaginary); // : real(real), imaginary(imaginary) {}
 	Complex(const Complex &other);
 	const Complex &operator=(const Complex &other);
-//	Complex operator+(const Complex &other);
+	bool operator==(const Complex &other);
+	bool operator!=(const Complex &other);
 
 	double getReal() const {
 		return real;
