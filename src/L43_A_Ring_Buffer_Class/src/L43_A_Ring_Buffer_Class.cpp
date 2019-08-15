@@ -20,8 +20,8 @@ int main() {
 	textRing.add("four");
 	textRing.add("five");
 
-	for(int i = 0; i < textRing.size(); ++i) {
-		cout << textRing.get(i) << endl;
-	}
+//	for(int i = 0; i < textRing.size(); ++i) {
+//		cout << textRing.get(i) << endl;
+//	}
 	return 0;
 }
