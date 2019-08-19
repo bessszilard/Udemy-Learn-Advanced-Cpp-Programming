@@ -18,7 +18,7 @@ namespace caveofprogramming {
 
 struct BitmapInfoHeader {
 	int32_t headerSize{40};
-	int32_t widht;
+	int32_t width;
 	int32_t height;
 	int16_t planes{1};
 	int16_t bitsPerPixel{24};
