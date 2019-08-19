@@ -5,6 +5,7 @@
  *      Author: szilard
  */
 
+#include <fstream>
 #include "Bitmap.h"
 #include "BitmapFileHeader.h"
 #include "BitmapInfoHeader.h"
@@ -22,7 +23,7 @@ void setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
 
 }
 
-bool Bitmap::write( string filename ) {
+bool Bitmap::write(string filename) {
 	BitmapFileHeader fileHeader;
 	BitmapInfoHeader fileInfo;
 
@@ -33,7 +34,21 @@ bool Bitmap::write( string filename ) {
 	fileInfo.width  = m_height;
 	fileInfo.height = m_height;
 
-	return false;
+	ofstream file;
+	file.open(filename, ios::out | ios::binary);
+
+	if(!file)
+		return false;
+
+	file.write((char *)&fileHeader, sizeof(fileHeader));
+	file.write((char *)&fileInfo,   sizeof(fileInfo));
+	file.write((char *)&m_pPixels,  m_width * m_height * 3);
+
+	file.close();
+	if(!file)
+		return false;
+
+	return true;
 }
 
 

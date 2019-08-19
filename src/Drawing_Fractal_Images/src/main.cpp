@@ -7,11 +7,17 @@
 //============================================================================
 
 #include <iostream>
-#include "BitmapFileHeader.h"
-#include "BitmapInfoHeader.h"
+//#include "BitmapFileHeader.h"
+//#include "BitmapInfoHeader.h"
+#include "Bitmap.h"
 using namespace std;
+using namespace caveofprogramming;
 
 int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	Bitmap bitmap(800, 600);
+
+	bitmap.write("bitmap.bmp");
+
+	cout << "Finished." << endl; // prints !!!Hello World!!!
 	return 0;
 }
