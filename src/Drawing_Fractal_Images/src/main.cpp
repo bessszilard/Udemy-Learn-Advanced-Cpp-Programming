@@ -14,10 +14,17 @@ using namespace std;
 using namespace caveofprogramming;
 
 int main() {
-	Bitmap bitmap(800, 600);
+	const int WIDTH = 800;
+	const int HEIGHT = 600;
+	Bitmap bitmap(WIDTH, HEIGHT);
+
+	for (int i = 0 ; i < WIDTH; ++i) {
+		for (int j = 0; j < HEIGHT; ++j) {
+			bitmap.setPixel(i, j, 128, 255, 255);
+		}
+	}
 
 	bitmap.write("bitmap.bmp");
-
 	cout << "Finished." << endl; // prints !!!Hello World!!!
 	return 0;
 }
