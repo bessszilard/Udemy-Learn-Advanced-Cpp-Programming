@@ -11,6 +11,8 @@
 #include <memory>
 #include "Bitmap.h"
 #include "Mandelbrot.h"
+#include <ctime>
+
 using namespace std;
 using namespace caveofprogramming;
 
@@ -19,13 +21,16 @@ int main() {
 	const int HEIGHT = 600;
 	Bitmap bitmap(WIDTH, HEIGHT);
 
-	double min = 9999999;
-	double max =-9999999;
+//	double min = 9999999;
+//	double max =-9999999;
 
 	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS]{0});
+	unique_ptr<int[]> fractal(new int[WIDTH * HEIGHT]{0});
 
-	for (int x = 0 ; x < WIDTH; x++) {
-		for (int y = 0; y < HEIGHT; y++) {
+	cout << "Hist calc: \t";
+	clock_t start_time = clock();
+	for (int y = 0; y < HEIGHT; y++) {
+		for (int x = 0 ; x < WIDTH; x++) {
 			double xFractal = (double)(x - WIDTH/2 - 200) * 2.0 / HEIGHT;
 			double yFractal = (double)(y - HEIGHT/2) * 2.0/ HEIGHT;
 
@@ -34,30 +39,48 @@ int main() {
 			if ( iterations != Mandelbrot::MAX_ITERATIONS)
 				histogram[iterations]++;
 
-			uint8_t color = (uint8_t)(256 * (double)iterations/Mandelbrot::MAX_ITERATIONS);
+			fractal[y * WIDTH + x] = iterations;
 
-			color = color * color * color;
-
-			bitmap.setPixel(x, y, 0, color, color);
-
-			if (iterations < min) min = iterations;
-			if (max < iterations) max = iterations;
+		}
+		static int progress = 0;
+		if (progress != 10 * y / HEIGHT ) {
+			cout << 100 * y / HEIGHT << "%\t" << flush;
+			progress = 10 * y / HEIGHT ;
 		}
 	}
 
-	int counter = 0;
-	for(int i = 0; i < Mandelbrot::MAX_ITERATIONS; ++i) {
-		cout << histogram[i] << " " << flush;
-		counter += histogram[i];
+	cout << "100%" << endl << "Color calc:\t";
+
+	int total = 0;
+	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
+		total += histogram[i];
 	}
 
-	cout << endl;
+	for (int y = 0; y < HEIGHT; y++) {
+		for (int x = 0 ; x < WIDTH; x++) {
 
-	cout << counter << "; " << WIDTH * HEIGHT << endl;
+			int iterations = fractal[y * WIDTH + x];
+			double hue = 0.0f;
+			for(int i = 0; i <= iterations; ++i) {
+				hue += (double)(histogram[i]) / total;
+			}
 
-	cout << min << ", " << max << endl;
+			uint8_t red = 0;
+			uint8_t green = hue * 255;
+			uint8_t blue = hue * 255;
+
+			bitmap.setPixel(x, y, red, green, blue);
+		}
+		static int progress = 0;
+		if (progress != 10 * y / HEIGHT ) {
+			cout << 100 * y / HEIGHT << "%\t" << flush;
+			progress = 10 * y / HEIGHT ;
+		}
+	}
+	clock_t end_time = clock();
+	cout << "100%" << endl;
 
 	bitmap.write("bitmap.bmp");
-	cout << "Finished." << endl; // prints !!!Hello World!!!
+	cout << "Finished. " << (end_time - start_time) * 1.0 / CLOCKS_PER_SEC << endl; // prints !!!Hello World!!!
 	return 0;
 }
