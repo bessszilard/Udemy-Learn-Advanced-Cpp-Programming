@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <stdint.h>
+#include <memory>
 #include "Bitmap.h"
 #include "Mandelbrot.h"
 using namespace std;
@@ -21,24 +22,43 @@ int main() {
 	double min = 9999999;
 	double max =-9999999;
 
+	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS + 1]{0});
+
 	for (int x = 0 ; x < WIDTH; x++) {
 		for (int y = 0; y < HEIGHT; y++) {
-			double xFractal = (double)x * 2 / WIDTH - 1;
-			double yFractal = (double)y * 2 / HEIGHT - 1;
+//			double xFractal = (double)(x - 200) * 2 / WIDTH - 1;
+//			double yFractal = (double)y * 2 / HEIGHT - 1;
+
+			double xFractal = (double)(x - WIDTH/2 - 200) * 2.0 / HEIGHT;
+			double yFractal = (double)(y - HEIGHT/2) * 2.0/ HEIGHT;
 
 			int iterations = Mandelbrot::getIteration(xFractal, yFractal);
 
-			uint8_t red = (uint8_t)(256 * (double)iterations/Mandelbrot::MAX_ITERATION);
+			histogram[iterations]++;
 
-			cout << (int)red << "\t";
+			uint8_t color = (uint8_t)(256 * (double)iterations/Mandelbrot::MAX_ITERATIONS);
 
-			bitmap.setPixel(x, y, red, red, red);
+			color = color * color * color;
 
-			if (red < min) min = red;
-			if (max < red) max = red;
+//			cout << (int)color << "\t";
+
+			bitmap.setPixel(x, y, 0, color, color);
+
+			if (iterations < min) min = iterations;
+			if (max < iterations) max = iterations;
 		}
-		cout << endl;
+//		cout << endl;
 	}
+
+	int counter = 0;
+	for(int i = 0; i <= Mandelbrot::MAX_ITERATIONS; ++i) {
+		cout << histogram[i] << " " << flush;
+		counter += histogram[i];
+	}
+
+	cout << endl;
+
+	cout << counter << "; " << WIDTH * HEIGHT << endl;
 
 	cout << min << ", " << max << endl;
 
