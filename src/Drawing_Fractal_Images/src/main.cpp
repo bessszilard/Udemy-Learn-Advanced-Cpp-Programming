@@ -13,7 +13,7 @@
 #include <math.h>
 #include "Bitmap.h"
 #include "Mandelbrot.h"
-#include "Zoom.h"
+#include "Zoomlist.h"
 
 using namespace std;
 using namespace caveofprogramming;
