@@ -22,36 +22,31 @@ int main() {
 	double min = 9999999;
 	double max =-9999999;
 
-	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS + 1]{0});
+	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS]{0});
 
 	for (int x = 0 ; x < WIDTH; x++) {
 		for (int y = 0; y < HEIGHT; y++) {
-//			double xFractal = (double)(x - 200) * 2 / WIDTH - 1;
-//			double yFractal = (double)y * 2 / HEIGHT - 1;
-
 			double xFractal = (double)(x - WIDTH/2 - 200) * 2.0 / HEIGHT;
 			double yFractal = (double)(y - HEIGHT/2) * 2.0/ HEIGHT;
 
 			int iterations = Mandelbrot::getIteration(xFractal, yFractal);
 
-			histogram[iterations]++;
+			if ( iterations != Mandelbrot::MAX_ITERATIONS)
+				histogram[iterations]++;
 
 			uint8_t color = (uint8_t)(256 * (double)iterations/Mandelbrot::MAX_ITERATIONS);
 
 			color = color * color * color;
-
-//			cout << (int)color << "\t";
 
 			bitmap.setPixel(x, y, 0, color, color);
 
 			if (iterations < min) min = iterations;
 			if (max < iterations) max = iterations;
 		}
-//		cout << endl;
 	}
 
 	int counter = 0;
-	for(int i = 0; i <= Mandelbrot::MAX_ITERATIONS; ++i) {
+	for(int i = 0; i < Mandelbrot::MAX_ITERATIONS; ++i) {
 		cout << histogram[i] << " " << flush;
 		counter += histogram[i];
 	}
