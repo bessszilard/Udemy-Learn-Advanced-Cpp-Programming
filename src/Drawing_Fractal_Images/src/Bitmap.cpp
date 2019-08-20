@@ -11,6 +11,7 @@
 #include "BitmapInfoHeader.h"
 
 using namespace caveofprogramming;
+using namespace std;
 
 namespace caveofprogramming {
 
@@ -30,14 +31,14 @@ void Bitmap::setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
 
 bool Bitmap::write(string filename) {
 	BitmapFileHeader fileHeader;
-	BitmapInfoHeader fileInfo;
+	BitmapInfoHeader infiHeader;
 
 	fileHeader.fileSize = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader) +
 						  m_width * m_height * 3;
 	fileHeader.dataOffset = sizeof(BitmapFileHeader) + sizeof(BitmapInfoHeader);
 
-	fileInfo.width  = m_height;
-	fileInfo.height = m_height;
+	infiHeader.width  = m_width;
+	infiHeader.height = m_height;
 
 	ofstream file;
 	file.open(filename, ios::out | ios::binary);
@@ -46,7 +47,7 @@ bool Bitmap::write(string filename) {
 		return false;
 
 	file.write((char *)&fileHeader, sizeof(fileHeader));
-	file.write((char *)&fileInfo,   sizeof(fileInfo));
+	file.write((char *)&infiHeader,   sizeof(infiHeader));
 	file.write((char *)m_pPixels.get(),  m_width * m_height * 3);
 
 	file.close();
