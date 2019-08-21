@@ -1,0 +1,25 @@
+/*
+ * RGB.h
+ *
+ *  Created on: Aug 21, 2019
+ *      Author: szilard
+ */
+
+#ifndef RGB_H_
+#define RGB_H_
+
+namespace caveofprogramming {
+
+struct RGB {
+	double r;
+	double g;
+	double b;
+
+	RGB(double r, double g, double b);
+};
+
+RGB operator-(const RGB &first, const RGB &second);
+
+} /* namespace caveofprogramming */
+
+#endif /* RGB_H_ */

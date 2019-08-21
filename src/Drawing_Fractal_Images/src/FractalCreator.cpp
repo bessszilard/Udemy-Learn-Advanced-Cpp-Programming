@@ -7,9 +7,18 @@
 #include <iostream>
 #include "FractalCreator.h"
 #include "Mandelbrot.h"
-//#include "Bitmap.h"
+#include "Zoom.h"
 
 namespace caveofprogramming {
+
+void FractalCreator::run(string fileName) {
+	addZoom(Zoom(295, m_height - 202, 0.1));
+	addZoom(Zoom(312, m_height - 304, 0.1));
+	calculateIterations();
+	calculateTotalIterations();
+	drawFractal();
+	writeBitman("bitmap.bmp");
+}
 
 FractalCreator::FractalCreator(const int width, const int height) :
 m_width(width), m_height(height),
