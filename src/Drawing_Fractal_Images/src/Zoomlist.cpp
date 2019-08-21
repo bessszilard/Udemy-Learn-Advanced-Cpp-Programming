@@ -28,8 +28,8 @@ void Zoomlist::add(const Zoom &zoom) {
 pair<double, double> Zoomlist::doZoom(int x, int y) {
 //	zooms[0];
 
-	double xFractal = (double)(x - m_width  / 2) * m_scale + m_xCenter;
-	double yFractal = (double)(y - m_height / 2) * m_scale + m_yCenter;
+	double xFractal = (x - m_width  / 2) * m_scale + m_xCenter;
+	double yFractal = (y - m_height / 2) * m_scale + m_yCenter;
 
 	return pair<double, double>(xFractal , yFractal);
 }
