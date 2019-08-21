@@ -19,12 +19,21 @@ void FractalCreator::run(string fileName) {
 	writeBitman("bitmap.bmp");
 }
 
+void FractalCreator::addRange(double rangeEnd, const RGB &rgb){
+	m_ranges.push_back(rangeEnd * Mandelbrot::MAX_ITERATIONS);
+	m_colors.push_back(rgb);
+}
+
+void FractalCreator::addZoom(const Zoom &zoom) {
+	m_zoomlist.add(zoom);
+}
+
 FractalCreator::FractalCreator(const int width, const int height) :
 m_width(width), m_height(height),
-m_bitmap(m_width, m_height),
 m_histogram(new int[Mandelbrot::MAX_ITERATIONS] {0}),
 m_fractal(new int[m_width * m_height] {0}),
-m_zoomlist(m_width, m_height) {
+m_zoomlist(m_width, m_height),
+m_bitmap(m_width, m_height) {
 	m_zoomlist.add(Zoom(m_width / 2, m_height / 2, 4.0 / m_width));
 }
 
@@ -59,7 +68,7 @@ void FractalCreator::calculateTotalIterations() {
 
 void FractalCreator::drawFractal() {
 	RGB startColor(20, 0, 0);
-	RGB endColor(128, 255, 128);
+	RGB endColor(128, 255, 0);
 	RGB diffColor = endColor - startColor;
 
 	for (int y = 0; y < m_height; y++) {
@@ -82,10 +91,6 @@ void FractalCreator::drawFractal() {
 			m_bitmap.setPixel(x, y, red, green, blue);
 		}
 	}
-}
-
-void FractalCreator::addZoom(const Zoom &zoom) {
-	m_zoomlist.add(zoom);
 }
 
 void FractalCreator::writeBitman(string name) {

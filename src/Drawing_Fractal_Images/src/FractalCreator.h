@@ -10,9 +10,11 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include "Zoom.h"
 #include "Zoomlist.h"
 #include "Bitmap.h"
+#include "RGB.h"
 
 using namespace std;
 
@@ -22,11 +24,13 @@ class FractalCreator {
 private:
 	int m_width;
 	int m_height;
-	unique_ptr<int[]> m_histogram{nullptr};
-	unique_ptr<int[]> m_fractal{nullptr};
+	unique_ptr<int[]> m_histogram;
+	unique_ptr<int[]> m_fractal;
 	Zoomlist m_zoomlist;
 	Bitmap m_bitmap;
 	int m_total{0};
+	vector<int> m_ranges;
+	vector<RGB> m_colors;
 
 private:
 	void calculateIterations();
@@ -37,6 +41,7 @@ private:
 public:
 	FractalCreator(const int width, const int height);
 	void addZoom(const Zoom &zoom);
+	void addRange(double rangeEnd, const RGB &rgb);
 	virtual ~FractalCreator();
 	void run(string fileName);
 };

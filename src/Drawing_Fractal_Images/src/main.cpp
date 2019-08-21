@@ -26,6 +26,10 @@ int main() {
 	clock_t start_time = clock();
 
 	FractalCreator fractal(WIDTH, HEIGHT);
+	fractal.addRange(0.3, RGB(255, 0, 0));
+	fractal.addRange(0.5, RGB(255, 255, 0));
+	fractal.addRange(1.0, RGB(255, 255, 255));
+
 	fractal.addZoom(Zoom(295, 202, 0.1));
 	fractal.addZoom(Zoom(312, 304, 0.1));
 	fractal.run("bitmap.bmp");
