@@ -8,12 +8,11 @@
 #include "FractalCreator.h"
 #include "Mandelbrot.h"
 #include "Zoom.h"
+#include "RGB.h"
 
 namespace caveofprogramming {
 
 void FractalCreator::run(string fileName) {
-	addZoom(Zoom(295, m_height - 202, 0.1));
-	addZoom(Zoom(312, m_height - 304, 0.1));
 	calculateIterations();
 	calculateTotalIterations();
 	drawFractal();
@@ -59,6 +58,10 @@ void FractalCreator::calculateTotalIterations() {
 }
 
 void FractalCreator::drawFractal() {
+	RGB startColor(20, 0, 0);
+	RGB endColor(128, 255, 128);
+	RGB diffColor = endColor - startColor;
+
 	for (int y = 0; y < m_height; y++) {
 		for (int x = 0; x < m_width; x++) {
 			uint8_t red = 0;
@@ -72,8 +75,9 @@ void FractalCreator::drawFractal() {
 				for (int i = 0; i <= iterations; ++i) {
 					hue += (double) (m_histogram[i]) / m_total;
 				}
-				green = 255 * hue;
-				blue = 255 * hue;
+				red   = startColor.r + diffColor.r * hue;
+				green = startColor.g + diffColor.g * hue;
+				blue  = startColor.b + diffColor.b * hue;
 			}
 			m_bitmap.setPixel(x, y, red, green, blue);
 		}

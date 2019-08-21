@@ -32,11 +32,11 @@ private:
 	void calculateIterations();
 	void calculateTotalIterations();
 	void drawFractal();
-	void addZoom(const Zoom &zoom);
 	void writeBitman(string name);
 
 public:
 	FractalCreator(const int width, const int height);
+	void addZoom(const Zoom &zoom);
 	virtual ~FractalCreator();
 	void run(string fileName);
 };

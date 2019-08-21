@@ -26,6 +26,8 @@ int main() {
 	clock_t start_time = clock();
 
 	FractalCreator fractal(WIDTH, HEIGHT);
+	fractal.addZoom(Zoom(295, 202, 0.1));
+	fractal.addZoom(Zoom(312, 304, 0.1));
 	fractal.run("bitmap.bmp");
 	clock_t end_time = clock();
 	cout << "100%" << endl;
