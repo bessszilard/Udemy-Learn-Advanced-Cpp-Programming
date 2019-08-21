@@ -24,73 +24,21 @@ int main() {
 	const int HEIGHT = 600;
 	Bitmap bitmap(WIDTH, HEIGHT);
 
-//	double min = 9999999;
-//	double max =-9999999;
-
-	Zoomlist zoomlist(WIDTH, HEIGHT);
-
-	zoomlist.add(Zoom(WIDTH / 2, HEIGHT / 2, 4.0 / WIDTH));
-	zoomlist.add(Zoom(295, HEIGHT - 202, 0.1));
-	zoomlist.add(Zoom(312, HEIGHT - 304, 0.1));
-//	zoomlist.add(Zoom(WIDTH / 2, HEIGHT / 2, 4.0 / WIDTH));
-
-	unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS]{0});
-	unique_ptr<int[]> fractal(new int[WIDTH * HEIGHT]{0});
-
-	cout << "Hist calc: \t";
 	clock_t start_time = clock();
-	for (int y = 0; y < HEIGHT; y++) {
-		for (int x = 0 ; x < WIDTH; x++) {
-			pair<double, double> coords = zoomlist.doZoom(x, y);
-			int iterations = Mandelbrot::getIteration(coords.first, coords.second);
 
-			if ( iterations != Mandelbrot::MAX_ITERATIONS)
-				histogram[iterations]++;
+	FractalCreator fractal(WIDTH, HEIGHT);
+	fractal.addZoom(Zoom(295, HEIGHT - 202, 0.1));
+	fractal.addZoom(Zoom(312, HEIGHT - 304, 0.1));
 
-			fractal[y * WIDTH + x] = iterations;
-		}
-		static int progress = 0;
-		if (progress != 10 * y / HEIGHT ) {
-			cout << 100 * y / HEIGHT << "%\t" << flush;
-			progress = 10 * y / HEIGHT ;
-		}
-	}
-
+	cout << "Iter calc:\t" << flush;
+	fractal.calculateIterations();
+	fractal.calculateTotalIterations();
+	fractal.drawFractal();
+	fractal.writeBitman("bitmap.bmp");
 	cout << "100%" << endl << "Color calc:\t";
-
-	int total = 0;
-	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
-		total += histogram[i];
-	}
-
-	for (int y = 0; y < HEIGHT; y++) {
-		for (int x = 0 ; x < WIDTH; x++) {
-			uint8_t red   = 0;
-			uint8_t green = 0;
-			uint8_t blue  = 0;
-
-			int iterations = fractal[y * WIDTH + x];
-
-			if (iterations != Mandelbrot::MAX_ITERATIONS) {
-				double hue = 0.0f;
-				for (int i = 0; i <= iterations; ++i) {
-					hue += (double) (histogram[i]) / total;
-				}
-				green = pow(255, hue);
-				blue = pow(255, hue);
-			}
-			bitmap.setPixel(x, y, red, green, blue);
-		}
-		static int progress = 0;
-		if (progress != 10 * y / HEIGHT ) {
-			cout << 100 * y / HEIGHT << "%\t" << flush;
-			progress = 10 * y / HEIGHT ;
-		}
-	}
 	clock_t end_time = clock();
 	cout << "100%" << endl;
 
-	bitmap.write("bitmap.bmp");
 	cout << "Finished. " << (end_time - start_time) * 1.0 / CLOCKS_PER_SEC << endl; // prints !!!Hello World!!!
 	return 0;
 }
