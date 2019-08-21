@@ -14,6 +14,7 @@
 #include "Bitmap.h"
 #include "Mandelbrot.h"
 #include "Zoomlist.h"
+#include "FractalCreator.h"
 
 using namespace std;
 using namespace caveofprogramming;

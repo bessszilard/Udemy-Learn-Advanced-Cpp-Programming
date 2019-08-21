@@ -26,7 +26,6 @@ public:
 	void setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
 	bool write( string filename );
 	virtual ~Bitmap();
-
 };
 
 } /* namespace caveofprogramming */
