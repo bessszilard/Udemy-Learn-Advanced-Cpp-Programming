@@ -3,7 +3,7 @@
 // Author      : 
 // Version     :
 // Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
+// Description : Mandelbrot drawer
 //============================================================================
 
 #include <iostream>
@@ -27,17 +27,20 @@ int main() {
 
 	FractalCreator fractal(WIDTH, HEIGHT);
 	fractal.addRange(0.0, RGB(0, 0, 0));
-	fractal.addRange(0.3, RGB(255, 0, 0));
-	fractal.addRange(0.5, RGB(255, 255, 0));
+	fractal.addRange(0.1, RGB(0, 128, 128));
+	fractal.addRange(0.3, RGB(255, 255, 0));
 	fractal.addRange(1.0, RGB(255, 255, 255));
 
-//	cout << fractal.getRange(1100) << endl;
+//	fractal.addRange(0.0, RGB(0, 0, 0));
+//	fractal.addRange(0.3, RGB(0, 0, 255));
+//	fractal.addRange(0.5, RGB(0, 0, 0));
+//	fractal.addRange(1.0, RGB(0, 0, 0));
 
 	fractal.addZoom(Zoom(295, 202, 0.1));
 	fractal.addZoom(Zoom(312, 304, 0.1));
 	fractal.run("bitmap.bmp");
 	clock_t end_time = clock();
 
-	cout << "Finished. " << (end_time - start_time) * 1.0 / CLOCKS_PER_SEC << endl; // prints !!!Hello World!!!
+	cout << "Finished. " << (end_time - start_time) * 1.0 / CLOCKS_PER_SEC << endl;
 	return 0;
 }

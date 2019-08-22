@@ -42,7 +42,8 @@ int Mandelbrot::getIteration(double x, double y) {
 	while(iterations < MAX_ITERATIONS) {
 		z = z*z + c;
 
-		if(abs(z) > 2) {
+//		if(abs(z) >  2) {
+		if(abs(z) >  30000) {
 			break;
 		}
 

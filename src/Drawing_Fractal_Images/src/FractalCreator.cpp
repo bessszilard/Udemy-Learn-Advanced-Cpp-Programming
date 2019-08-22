@@ -10,6 +10,7 @@
 #include "Zoom.h"
 #include "RGB.h"
 #include "assert.h"
+#include <math.h>
 
 namespace caveofprogramming {
 
@@ -72,40 +73,32 @@ void FractalCreator::calculateTotalIterations() {
 	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
 		m_total += m_histogram[i];
 	}
-//	cout << "Overall total1 " << m_total << endl;
+	cout << "Overall total1 " << m_total << endl;
 
 }
 
 void FractalCreator::calculateTotalRanges() {
-
-//	for(int i = 1; i < m_ranges.size(); ++i) {
-////		int range_dist = m_ranges[i] - m_ranges[i-1];
-//		for(int iter = m_ranges[i-1]; iter < m_ranges[i]; ++iter) {
-//			m_rangeTotals[i-1] += m_histogram[iter];
-//		}
-//	}
 	int rangeIndex = 0;
 	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
 		m_rangeTotals[getRange(i)] += m_histogram[i];
 	}
 	int overalTotal = 0;
 	for(auto value : m_rangeTotals) {
-//		cout << value << endl;
+		cout << value << endl;
 		overalTotal += value;
 	}
-//	cout << "Overall total1 " << overalTotal << endl;
+	cout << "Overall total1 " << overalTotal << endl;
 }
 
 void FractalCreator::drawFractal() {
-	RGB startColor(20, 0, 0);
-	RGB endColor(128, 255, 0);
-	RGB diffColor = endColor - startColor;
-
 	for (int y = 0; y < m_height; y++) {
 		for (int x = 0; x < m_width; x++) {
 			int iterations = m_fractal[y * m_width + x];
 
 			int range = getRange(iterations);
+			RGB startColor = m_colors[range];
+			RGB endColor   = m_colors[range + 1];
+			RGB diffColor  = endColor - startColor;
 
 			uint8_t red = 0;
 			uint8_t green = 0;
@@ -119,6 +112,16 @@ void FractalCreator::drawFractal() {
 				red   = startColor.r + diffColor.r * totalPixels / m_rangeTotals[range];
 				green = startColor.g + diffColor.g * totalPixels / m_rangeTotals[range];
 				blue  = startColor.b + diffColor.b * totalPixels / m_rangeTotals[range];
+
+//				red   = 255 * sin(((double)startColor.r + diffColor.r * totalPixels / m_rangeTotals[range]) / 255 * 360);
+//				green = 255 * sin(((double)startColor.g + diffColor.g * totalPixels / m_rangeTotals[range]) / 255 * 360);
+//				blue  = startColor.b + diffColor.b * totalPixels / m_rangeTotals[range];
+
+
+//				red   = pow(255, (startColor.r + diffColor.r * totalPixels / m_rangeTotals[range]) / 255);
+//				green = pow(255, (startColor.g + diffColor.g * totalPixels / m_rangeTotals[range]) / 255);
+//				blue  = pow(255, (startColor.b + diffColor.b * totalPixels / m_rangeTotals[range]) / 255);
+
 			}
 			m_bitmap.setPixel(x, y, red, green, blue);
 		}
