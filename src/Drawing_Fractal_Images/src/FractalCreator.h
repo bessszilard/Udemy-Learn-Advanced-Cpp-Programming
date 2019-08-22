@@ -48,6 +48,7 @@ public:
 	void addRange(double rangeEnd, const RGB &rgb);
 	virtual ~FractalCreator();
 	void run(string fileName);
+	int getRange(int iterantions) const;
 };
 
 } /* namespace caveofprogramming */

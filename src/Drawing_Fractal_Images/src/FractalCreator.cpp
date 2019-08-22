@@ -9,6 +9,7 @@
 #include "Mandelbrot.h"
 #include "Zoom.h"
 #include "RGB.h"
+#include "assert.h"
 
 namespace caveofprogramming {
 
@@ -77,22 +78,16 @@ void FractalCreator::calculateTotalIterations() {
 
 void FractalCreator::calculateTotalRanges() {
 
-	for(int i = 1; i < m_ranges.size(); ++i) {
-//		int range_dist = m_ranges[i] - m_ranges[i-1];
-		for(int iter = m_ranges[i-1]; iter < m_ranges[i]; ++iter) {
-			m_rangeTotals[i-1] += m_histogram[iter];
-		}
-	}
-
-//	int rangeIndex = 0;
-//	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
-//		int pixels = m_histogram[i];
-//
-//		if(i >= m_ranges[rangeIndex+1]) {
-//			rangeIndex++;
+//	for(int i = 1; i < m_ranges.size(); ++i) {
+////		int range_dist = m_ranges[i] - m_ranges[i-1];
+//		for(int iter = m_ranges[i-1]; iter < m_ranges[i]; ++iter) {
+//			m_rangeTotals[i-1] += m_histogram[iter];
 //		}
-//		m_rangeTotals[rangeIndex] += pixels;
 //	}
+	int rangeIndex = 0;
+	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
+		m_rangeTotals[getRange(i)] += m_histogram[i];
+	}
 	int overalTotal = 0;
 	for(auto value : m_rangeTotals) {
 		cout << value << endl;
@@ -130,6 +125,25 @@ void FractalCreator::drawFractal() {
 
 void FractalCreator::writeBitman(string name) {
 	m_bitmap.write(name);
+}
+
+
+int FractalCreator::getRange(int iterations) const {
+	int range = 0;
+
+	for(uint i=1; i < m_ranges.size(); ++i) {
+		range = i;
+
+		if(m_ranges[i] > iterations) {
+			break;
+		}
+	}
+	range--;
+
+	assert(range > -1);
+	assert(range < m_ranges.size());
+
+	return range;
 }
 
 } /* namespace caveofprogramming */
