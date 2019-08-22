@@ -72,7 +72,7 @@ void FractalCreator::calculateTotalIterations() {
 	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
 		m_total += m_histogram[i];
 	}
-	cout << "Overall total1 " << m_total << endl;
+//	cout << "Overall total1 " << m_total << endl;
 
 }
 
@@ -90,10 +90,10 @@ void FractalCreator::calculateTotalRanges() {
 	}
 	int overalTotal = 0;
 	for(auto value : m_rangeTotals) {
-		cout << value << endl;
+//		cout << value << endl;
 		overalTotal += value;
 	}
-	cout << "Overall total1 " << overalTotal << endl;
+//	cout << "Overall total1 " << overalTotal << endl;
 }
 
 void FractalCreator::drawFractal() {
@@ -106,16 +106,12 @@ void FractalCreator::drawFractal() {
 			int iterations = m_fractal[y * m_width + x];
 
 			int range = getRange(iterations);
-			RGB startColor = m_colors[range];
-			RGB endColor   = m_colors[range + 1];
-			RGB diffColor  = startColor - endColor;
 
 			uint8_t red = 0;
 			uint8_t green = 0;
 			uint8_t blue = 0;
 
 			if (iterations != Mandelbrot::MAX_ITERATIONS) {
-//				double hue = 0.0f;
 				int totalPixels = 0;
 				for (int i = 0; i <= iterations; ++i) {
 					totalPixels += m_histogram[i];
