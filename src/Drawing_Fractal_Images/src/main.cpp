@@ -7,17 +7,15 @@
 //============================================================================
 
 #include <iostream>
-#include <stdint.h>
-#include <memory>
-#include <ctime>
-#include <math.h>
-#include "Bitmap.h"
-#include "Mandelbrot.h"
-#include "Zoomlist.h"
 #include "FractalCreator.h"
 #include "RGB.h"
-using namespace std;
-using namespace caveofprogramming;
+#include "Zoom.h"
+
+using std::cout;
+using std::endl;
+using caveofprogramming::FractalCreator;
+using caveofprogramming::RGB;
+using caveofprogramming::Zoom;
 
 int main() {
 	const int WIDTH = 800;
@@ -30,11 +28,6 @@ int main() {
 	fractal.addRange(0.1, RGB(0, 128, 128));
 	fractal.addRange(0.3, RGB(255, 255, 0));
 	fractal.addRange(1.0, RGB(255, 255, 255));
-
-//	fractal.addRange(0.0, RGB(0, 0, 0));
-//	fractal.addRange(0.3, RGB(0, 0, 255));
-//	fractal.addRange(0.5, RGB(0, 0, 0));
-//	fractal.addRange(1.0, RGB(0, 0, 0));
 
 	fractal.addZoom(Zoom(295, 202, 0.1));
 	fractal.addZoom(Zoom(312, 304, 0.1));

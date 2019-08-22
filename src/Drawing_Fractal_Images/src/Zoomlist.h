@@ -12,7 +12,9 @@
 #include <utility>
 #include "Zoom.h"
 
-using namespace std;
+using std::vector;
+using std::pair;
+
 namespace caveofprogramming {
 
 class Zoomlist {

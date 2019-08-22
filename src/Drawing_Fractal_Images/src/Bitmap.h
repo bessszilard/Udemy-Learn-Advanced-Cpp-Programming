@@ -11,7 +11,9 @@
 #include <string>
 #include <stdint.h>
 #include <memory>
-using namespace std;
+//using namespace std;
+using std::unique_ptr;
+using std::string;
 
 namespace caveofprogramming {
 

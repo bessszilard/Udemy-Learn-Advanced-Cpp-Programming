@@ -16,8 +16,6 @@
 #include "Bitmap.h"
 #include "RGB.h"
 
-using namespace std;
-
 namespace caveofprogramming {
 
 class FractalCreator {

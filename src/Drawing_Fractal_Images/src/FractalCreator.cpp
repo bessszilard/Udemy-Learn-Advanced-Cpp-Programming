@@ -7,10 +7,11 @@
 #include <iostream>
 #include "FractalCreator.h"
 #include "Mandelbrot.h"
-#include "Zoom.h"
-#include "RGB.h"
 #include "assert.h"
-#include <math.h>
+
+using std::cout;
+using std::endl;
+using std::flush;
 
 namespace caveofprogramming {
 
@@ -46,7 +47,6 @@ m_bitmap(m_width, m_height) {
 }
 
 FractalCreator::~FractalCreator() {
-	// TODO Auto-generated destructor stub
 }
 
 void FractalCreator::calculateIterations() {
@@ -73,21 +73,16 @@ void FractalCreator::calculateTotalIterations() {
 	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
 		m_total += m_histogram[i];
 	}
-	cout << "Overall total1 " << m_total << endl;
-
 }
 
 void FractalCreator::calculateTotalRanges() {
-	int rangeIndex = 0;
 	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
 		m_rangeTotals[getRange(i)] += m_histogram[i];
 	}
 	int overalTotal = 0;
 	for(auto value : m_rangeTotals) {
-		cout << value << endl;
 		overalTotal += value;
 	}
-	cout << "Overall total1 " << overalTotal << endl;
 }
 
 void FractalCreator::drawFractal() {
@@ -112,16 +107,6 @@ void FractalCreator::drawFractal() {
 				red   = startColor.r + diffColor.r * totalPixels / m_rangeTotals[range];
 				green = startColor.g + diffColor.g * totalPixels / m_rangeTotals[range];
 				blue  = startColor.b + diffColor.b * totalPixels / m_rangeTotals[range];
-
-//				red   = 255 * sin(((double)startColor.r + diffColor.r * totalPixels / m_rangeTotals[range]) / 255 * 360);
-//				green = 255 * sin(((double)startColor.g + diffColor.g * totalPixels / m_rangeTotals[range]) / 255 * 360);
-//				blue  = startColor.b + diffColor.b * totalPixels / m_rangeTotals[range];
-
-
-//				red   = pow(255, (startColor.r + diffColor.r * totalPixels / m_rangeTotals[range]) / 255);
-//				green = pow(255, (startColor.g + diffColor.g * totalPixels / m_rangeTotals[range]) / 255);
-//				blue  = pow(255, (startColor.b + diffColor.b * totalPixels / m_rangeTotals[range]) / 255);
-
 			}
 			m_bitmap.setPixel(x, y, red, green, blue);
 		}
@@ -138,16 +123,13 @@ int FractalCreator::getRange(int iterations) const {
 
 	for(uint i=1; i < m_ranges.size(); ++i) {
 		range = i;
-
-		if(m_ranges[i] > iterations) {
+		if(m_ranges[i] > iterations)
 			break;
-		}
 	}
 	range--;
 
 	assert(range > -1);
-	assert(range < m_ranges.size());
-
+	assert((uint)range < m_ranges.size());
 	return range;
 }
 
