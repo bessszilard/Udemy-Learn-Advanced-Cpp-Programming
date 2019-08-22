@@ -103,20 +103,26 @@ void FractalCreator::drawFractal() {
 
 	for (int y = 0; y < m_height; y++) {
 		for (int x = 0; x < m_width; x++) {
+			int iterations = m_fractal[y * m_width + x];
+
+			int range = getRange(iterations);
+			RGB startColor = m_colors[range];
+			RGB endColor   = m_colors[range + 1];
+			RGB diffColor  = startColor - endColor;
+
 			uint8_t red = 0;
 			uint8_t green = 0;
 			uint8_t blue = 0;
 
-			int iterations = m_fractal[y * m_width + x];
-
 			if (iterations != Mandelbrot::MAX_ITERATIONS) {
-				double hue = 0.0f;
+//				double hue = 0.0f;
+				int totalPixels = 0;
 				for (int i = 0; i <= iterations; ++i) {
-					hue += (double) (m_histogram[i]) / m_total;
+					totalPixels += m_histogram[i];
 				}
-				red   = startColor.r + diffColor.r * hue;
-				green = startColor.g + diffColor.g * hue;
-				blue  = startColor.b + diffColor.b * hue;
+				red   = startColor.r + diffColor.r * totalPixels / m_rangeTotals[range];
+				green = startColor.g + diffColor.g * totalPixels / m_rangeTotals[range];
+				blue  = startColor.b + diffColor.b * totalPixels / m_rangeTotals[range];
 			}
 			m_bitmap.setPixel(x, y, red, green, blue);
 		}
