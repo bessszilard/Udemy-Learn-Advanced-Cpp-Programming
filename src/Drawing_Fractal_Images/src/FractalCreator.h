@@ -32,9 +32,13 @@ private:
 	vector<int> m_ranges;
 	vector<RGB> m_colors;
 
+	vector<double> m_rangeTotals;
+	bool m_bGotFirstRange{false};
+
 private:
 	void calculateIterations();
 	void calculateTotalIterations();
+	void calculateTotalRanges();
 	void drawFractal();
 	void writeBitman(string name);
 

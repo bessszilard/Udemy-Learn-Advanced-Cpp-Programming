@@ -15,6 +15,7 @@ namespace caveofprogramming {
 void FractalCreator::run(string fileName) {
 	calculateIterations();
 	calculateTotalIterations();
+	calculateTotalRanges();
 	drawFractal();
 	writeBitman("bitmap.bmp");
 }
@@ -22,6 +23,11 @@ void FractalCreator::run(string fileName) {
 void FractalCreator::addRange(double rangeEnd, const RGB &rgb){
 	m_ranges.push_back(rangeEnd * Mandelbrot::MAX_ITERATIONS);
 	m_colors.push_back(rgb);
+
+	if(m_bGotFirstRange == true) {
+		m_rangeTotals.push_back(0.0);
+	}
+	m_bGotFirstRange = true;
 }
 
 void FractalCreator::addZoom(const Zoom &zoom) {
@@ -58,11 +64,36 @@ void FractalCreator::calculateIterations() {
 			progress = 10 * y / m_height ;
 		}
 	}
+	cout << "100%" << endl;
 }
 
 void FractalCreator::calculateTotalIterations() {
 	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
 		m_total += m_histogram[i];
+	}
+}
+
+void FractalCreator::calculateTotalRanges() {
+
+	for(int i = 1; i < m_ranges.size(); ++i) {
+//		int range_dist = m_ranges[i] - m_ranges[i-1];
+		for(int iter = m_ranges[i-1]; iter < m_ranges[i]; ++iter) {
+			m_rangeTotals[i-1] += m_histogram[iter];
+		}
+	}
+
+//	int rangeIndex = 0;
+//	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
+//		int pixels = m_histogram[i];
+//
+//		if(i >= m_ranges[rangeIndex+1]) {
+//			rangeIndex++;
+//		}
+//		m_rangeTotals[rangeIndex] += pixels;
+//	}
+
+	for(auto value : m_rangeTotals) {
+		cout << value << endl;
 	}
 }
 

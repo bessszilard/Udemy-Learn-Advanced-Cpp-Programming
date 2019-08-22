@@ -26,6 +26,7 @@ int main() {
 	clock_t start_time = clock();
 
 	FractalCreator fractal(WIDTH, HEIGHT);
+	fractal.addRange(0.0, RGB(0, 0, 0));
 	fractal.addRange(0.3, RGB(255, 0, 0));
 	fractal.addRange(0.5, RGB(255, 255, 0));
 	fractal.addRange(1.0, RGB(255, 255, 255));
@@ -34,7 +35,6 @@ int main() {
 	fractal.addZoom(Zoom(312, 304, 0.1));
 	fractal.run("bitmap.bmp");
 	clock_t end_time = clock();
-	cout << "100%" << endl;
 
 	cout << "Finished. " << (end_time - start_time) * 1.0 / CLOCKS_PER_SEC << endl; // prints !!!Hello World!!!
 	return 0;
