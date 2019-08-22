@@ -71,6 +71,8 @@ void FractalCreator::calculateTotalIterations() {
 	for(int i=0; i<Mandelbrot::MAX_ITERATIONS; ++i) {
 		m_total += m_histogram[i];
 	}
+	cout << "Overall total1 " << m_total << endl;
+
 }
 
 void FractalCreator::calculateTotalRanges() {
@@ -91,10 +93,12 @@ void FractalCreator::calculateTotalRanges() {
 //		}
 //		m_rangeTotals[rangeIndex] += pixels;
 //	}
-
+	int overalTotal = 0;
 	for(auto value : m_rangeTotals) {
 		cout << value << endl;
+		overalTotal += value;
 	}
+	cout << "Overall total1 " << overalTotal << endl;
 }
 
 void FractalCreator::drawFractal() {
