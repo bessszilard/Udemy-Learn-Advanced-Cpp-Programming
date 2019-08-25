@@ -57,13 +57,12 @@ void FractalCreator::calculateIterations() {
 
 			if ( iterations != Mandelbrot::MAX_ITERATIONS)
 				m_histogram[iterations]++;
-
 			m_fractal[y * m_width + x] = iterations;
 		}
 		static int progress = 0;
 		if (progress != 10 * y / m_height ) {
-			cout << 100 * y / m_height << "%\t" << flush;
-			progress = 10 * y / m_height ;
+			cout << 100    * y / m_height << "%\t" << flush;
+			progress = 10  * y / m_height ;
 		}
 	}
 	cout << "100%" << endl;
@@ -95,9 +94,9 @@ void FractalCreator::drawFractal() {
 			RGB endColor   = m_colors[range + 1];
 			RGB diffColor  = endColor - startColor;
 
-			uint8_t red = 0;
-			uint8_t green = 0;
-			uint8_t blue = 0;
+			uint8_t red 	= 0;
+			uint8_t green 	= 0;
+			uint8_t blue 	= 0;
 
 			if (iterations != Mandelbrot::MAX_ITERATIONS) {
 				int totalPixels = 0;
@@ -120,7 +119,6 @@ void FractalCreator::writeBitman(string name) {
 
 int FractalCreator::getRange(int iterations) const {
 	int range = 0;
-
 	for(uint i=1; i < m_ranges.size(); ++i) {
 		range = i;
 		if(m_ranges[i] > iterations)

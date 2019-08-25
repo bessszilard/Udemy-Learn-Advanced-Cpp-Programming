@@ -31,6 +31,7 @@ int main() {
 
 	fractal.addZoom(Zoom(295, 202, 0.1));
 	fractal.addZoom(Zoom(312, 304, 0.1));
+
 	fractal.run("bitmap.bmp");
 	clock_t end_time = clock();
 

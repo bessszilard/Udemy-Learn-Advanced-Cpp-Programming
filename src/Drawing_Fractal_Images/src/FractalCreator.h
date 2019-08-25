@@ -39,14 +39,15 @@ private:
 	void calculateTotalRanges();
 	void drawFractal();
 	void writeBitman(string name);
+	int getRange(int iterantions) const;
 
 public:
 	FractalCreator(const int width, const int height);
-	void addZoom(const Zoom &zoom);
-	void addRange(double rangeEnd, const RGB &rgb);
-	virtual ~FractalCreator();
 	void run(string fileName);
-	int getRange(int iterantions) const;
+	void addRange(double rangeEnd, const RGB &rgb);
+	void addZoom(const Zoom &zoom);
+
+	virtual ~FractalCreator();
 };
 
 } /* namespace caveofprogramming */
